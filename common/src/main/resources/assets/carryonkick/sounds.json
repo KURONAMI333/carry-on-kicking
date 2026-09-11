@@ -1,0 +1,28 @@
+{
+  "windup": {
+    "subtitle": "subtitles.carryonkick.windup",
+    "sounds": [{"name": "carryonkick:windup", "attenuation_distance": 10}]
+  },
+  "kick": {
+    "subtitle": "subtitles.carryonkick.kick",
+    "sounds": [
+      {"name": "carryonkick:kick_1", "attenuation_distance": 10},
+      {"name": "carryonkick:kick_2", "attenuation_distance": 10},
+      {"name": "carryonkick:kick_3", "attenuation_distance": 10},
+      {"name": "carryonkick:kick_4", "attenuation_distance": 10},
+      {"name": "carryonkick:kick_5", "attenuation_distance": 10},
+      {"name": "carryonkick:kick_6", "attenuation_distance": 10},
+      {"name": "carryonkick:kick_7", "attenuation_distance": 10},
+      {"name": "carryonkick:kick_8", "attenuation_distance": 10}
+    ]
+  },
+  "drop": {
+    "subtitle": "subtitles.carryonkick.drop",
+    "sounds": [
+      {"name": "carryonkick:drop_1", "attenuation_distance": 10},
+      {"name": "carryonkick:drop_2", "attenuation_distance": 10},
+      {"name": "carryonkick:drop_3", "attenuation_distance": 10},
+      {"name": "carryonkick:drop_4", "attenuation_distance": 10}
+    ]
+  }
+}
