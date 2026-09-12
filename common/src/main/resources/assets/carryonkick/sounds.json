@@ -1,7 +1,7 @@
 {
   "windup": {
     "subtitle": "subtitles.carryonkick.windup",
-    "sounds": [{"name": "carryonkick:windup", "attenuation_distance": 10}]
+    "sounds": [{"name": "carryonkick:windup_loop", "attenuation_distance": 10}]
   },
   "kick": {
     "subtitle": "subtitles.carryonkick.kick",

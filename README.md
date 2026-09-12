@@ -1,4 +1,4 @@
-# Carry On Kick
+# Carry On Kicking
 
 A Carry On addon that lets you charge a kick and launch the mob you are holding. Inspired by Big Walk.
 
@@ -13,7 +13,17 @@ Block carrying and player carrying keep their normal Carry On controls.
 - Fabric API on Fabric
 - Install the addon on both the client and the server
 
-This is a development prototype. Visuals and game feel are still being verified.
+Download the matching loader version from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/carry-on-kicking).
+
+Bugs and questions: comment on the CurseForge page, or DM [@kuronami333 on X](https://x.com/kuronami333).
+
+## Credits and license
+
+The icon adapts Carry On's wordmark and includes Minecraft visual elements. See [NOTICE.md](NOTICE.md) for attributions and third-party terms.
+
+All Rights Reserved. Free to put in any modpack, on any platform, monetised or not - no permission needed, no credit required. See [LICENSE](LICENSE).
+
+NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.
 
 ## Building
 

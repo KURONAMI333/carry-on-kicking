@@ -68,7 +68,7 @@ def main() -> None:
     timeline = np.arange(round(RATE * duration)) / RATE
     rustle = filtered_noise(rng, duration, 540, 210)
     rustle *= 0.8 + 0.2 * np.sin(2 * np.pi * 18 * timeline / duration)
-    save("windup", rustle, -25)
+    save("windup_loop", rustle, -25)
 
     for number in range(1, 9):
         rng = np.random.default_rng(8210 + number)

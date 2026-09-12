@@ -29,3 +29,8 @@ _handoff/
 DESIGN_COMPILE.md
 runclient-hosts.gradle
 *.log
+branding/CAMPAIGN_LEDGER.md
+branding/scene/
+branding/icon-candidates/
+branding/render_carry_on_kicking_icons.py
+__pycache__/

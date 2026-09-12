@@ -7,6 +7,12 @@
     "authors": [
         "${mod_author}"
     ],
+    "icon": "logo.png",
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/carry-on-kicking",
+        "sources": "https://github.com/KURONAMI333/carry-on-kicking",
+        "issues": "https://www.curseforge.com/minecraft/mc-mods/carry-on-kicking/comments"
+    },
     "license": "${license}",
     "environment": "*",
     "entrypoints": {
