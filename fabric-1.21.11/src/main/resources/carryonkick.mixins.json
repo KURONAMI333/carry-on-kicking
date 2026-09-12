@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.kuronami.carryonkick.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "LivingEntityTravelMixin",
+    "VanillaMobTravelMixin"
+  ],
+  "client": [
+    "MinecraftUseMixin",
+    "ItemInHandRendererMixin",
+    "HumanoidModelMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

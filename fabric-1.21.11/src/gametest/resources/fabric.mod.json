@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "carryonkick_gametest",
+  "version": "1.0.0",
+  "name": "Carry On Kicking Game Tests",
+  "environment": "*",
+  "entrypoints": {"fabric-gametest": ["com.kuronami.carryonkicktest.CarryOnKickGameTests"]},
+  "depends": {"carryonkick": "*", "carryon": "*"}
+}

@@ -1,0 +1,37 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "icon": "logo.png",
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/carry-on-kicking",
+        "sources": "https://github.com/KURONAMI333/carry-on-kicking",
+        "issues": "https://www.curseforge.com/minecraft/mc-mods/carry-on-kicking/comments"
+    },
+    "license": "${license}",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.kuronami.carryonkick.Carryonkick"
+        ],
+        "client": [
+            "com.kuronami.carryonkick.CarryOnKickFabricClient"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json",
+        "${mod_id}.fabric.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_min_version}",
+        "fabric-api": "*",
+        "carryon": ">=2.9.2",
+        "minecraft": "${minecraft_version}",
+        "java": ">=${java_version}"
+    }
+}

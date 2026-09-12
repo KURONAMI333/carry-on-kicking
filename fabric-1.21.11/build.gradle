@@ -1,0 +1,88 @@
+plugins {
+    id 'fabric-loom' version '1.14.10'
+}
+
+version = mod_version
+group = mod_group_id
+base { archivesName = mod_id }
+
+sourceSets {
+    gametest {
+        compileClasspath += sourceSets.main.compileClasspath + sourceSets.main.output
+        runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.main.output
+    }
+}
+
+loom {
+    runs {
+        gametest {
+            server()
+            runDir('runs/gametest')
+            source sourceSets.gametest
+            vmArg '-Dfabric-api.gametest=true'
+            vmArg "-Dfabric-api.gametest.report-file=${project.file('runs/gametest-report.xml')}"
+        }
+        server {
+            server()
+            runDir('runs/server')
+        }
+    }
+}
+
+repositories {
+    maven { url = 'https://maven.blamejared.com' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modCompileOnly("tschipp.carryon:carryon-common-1.21.11:${carryon_version}") {
+        transitive = false
+    }
+    modRuntimeOnly("tschipp.carryon:carryon-fabric-1.21.11:${carryon_version}") {
+        // Upstream's POM includes optional Cloth Config and Mod Menu versions
+        // unavailable on public Maven. The distributed JAR embeds common code.
+        transitive = false
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+processResources {
+    from('../common/src/main/resources') {
+        include 'assets/carryonkick/**'
+        include 'logo.png'
+        include 'META-INF/NOTICE-carryonkick.md'
+        include 'META-INF/licenses/**'
+    }
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand version: project.version,
+                mod_id: mod_id,
+                mod_name: mod_name,
+                description: mod_description,
+                mod_author: mod_author,
+                fabric_loader_min_version: '0.18.4',
+                minecraft_version: minecraft_version,
+                java_version: '21',
+                license: 'All Rights Reserved'
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+tasks.withType(Test).configureEach { useJUnitPlatform() }
+tasks.named('build') { dependsOn tasks.named('gametestClasses') }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from('../LICENSE') { rename { 'LICENSE_Carry On Kicking' } }
+}
