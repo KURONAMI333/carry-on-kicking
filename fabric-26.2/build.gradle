@@ -1,0 +1,120 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.16.3'
+}
+
+version = project.version
+group = project.group
+
+base {
+    archivesName = mod_id
+}
+
+repositories {
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com/'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    // Minecraft 26.x has no intermediary or official mapping artifact. Loom 1.16.3
+    // compiles against the released, deobfuscated game classes without a mappings line.
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    // Carry On is a runtime dependency and is never bundled into this jar.
+    compileOnly "tschipp.carryon:carryon-common-26.2:${carryon_version}"
+    runtimeOnly "tschipp.carryon:carryon-fabric-26.2:${carryon_version}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// GameTest classes live in a separate, development-only Fabric mod.  They are
+// excluded from the shipped jar and Loom runs the server suite as part of build.
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "${mod_id}-gametest"
+        enableGameTests = true
+        enableClientGameTests = false
+        eula = true
+    }
+}
+
+processResources {
+    // Shared, accepted assets stay authoritative in the 1.21.1 common source.
+    from('../common/src/main/resources') {
+        include 'assets/carryonkick/**'
+        include 'logo.png'
+        include 'META-INF/NOTICE-carryonkick.md'
+        include 'META-INF/licenses/**'
+    }
+    inputs.properties([
+            version: project.version,
+            mod_id: mod_id,
+            mod_name: mod_name,
+            mod_author: mod_author,
+            description: mod_description,
+            license: license,
+            minecraft_version: minecraft_version,
+            fabric_loader_min_version: fabric_loader_min_version,
+            java_version: java_version,
+            carryon_version: carryon_version
+    ])
+    filesMatching('fabric.mod.json') {
+        expand([
+                version: project.version,
+                mod_id: mod_id,
+                mod_name: mod_name,
+                mod_author: mod_author,
+                description: mod_description,
+                license: license,
+                minecraft_version: minecraft_version,
+                fabric_loader_min_version: fabric_loader_min_version,
+                java_version: java_version,
+                carryon_version: carryon_version
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 25
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+loom {
+    mixin {
+        useLegacyMixinAp = false
+    }
+    runs {
+        client {
+            client()
+            runDir('run')
+        }
+        server {
+            server()
+            runDir('run')
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def licenseFile = file('../LICENSE')
+tasks.named('jar', Jar).configure {
+    inputs.file(licenseFile)
+    from(licenseFile) {
+        rename { "LICENSE_${mod_name}" }
+    }
+}
