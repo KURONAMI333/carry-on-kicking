@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "carryonkick-gametest",
+  "version": "1.0.0",
+  "name": "Carry On Kicking Game Tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "com.kuronami.carryonkicktest.CarryOnKickGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "26.2",
+    "fabric-api": "*",
+    "carryonkick": "*"
+  }
+}
