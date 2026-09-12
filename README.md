@@ -12,6 +12,8 @@ Block carrying and player carrying keep their normal Carry On controls.
 | --- | --- | --- |
 | 1.21.1 | NeoForge, Fabric | 2.2.6.13 |
 | 1.20.1 | Forge, Fabric | 2.1.2.7 |
+| 1.21.11 | Fabric | 2.9.2 |
+| 26.2 | Fabric | 2.11.0 |
 
 - Fabric API on Fabric
 - Install the addon on both the client and the server
@@ -33,3 +35,5 @@ NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR 
 For Minecraft 1.21.1, use Java 21 and run `./gradlew build`. Loader-specific JARs are written to `neoforge/build/libs` and `fabric/build/libs`.
 
 For Minecraft 1.20.1, use Java 21 and run `./gradlew build` from `mc1201/`. This build produces Java 17-compatible classes. Loader-specific JARs are written to `mc1201/forge/build/libs` and `mc1201/fabric/build/libs`. The build shares the original artwork, sounds, and translations with the 1.21.1 version.
+
+For Minecraft 1.21.11, use Java 21 and run `./gradlew build` from `fabric-1.21.11/`. For Minecraft 26.2, use Java 25 and run the same command from `fabric-26.2/`. Each build writes its JAR to `build/libs` inside that directory and shares the original artwork, sounds, and translations.
