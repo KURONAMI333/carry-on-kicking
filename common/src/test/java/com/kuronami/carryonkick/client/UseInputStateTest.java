@@ -37,6 +37,21 @@ class UseInputStateTest {
     }
 
     @Test
+    void queuedClickAlreadyReleasedStartsAndReleasesExactlyOnce() {
+        UseInputState state = new UseInputState();
+        UUID entity = UUID.randomUUID();
+
+        UseInputState.Output start = state.onStartUse(false, entity);
+        assertTrue(start.consumeUse());
+        assertEquals(KickAction.START, start.action().orElseThrow());
+        assertTrue(state.isCharging());
+
+        assertEquals(KickAction.RELEASE, state.onTick(false, entity).action().orElseThrow());
+        assertFalse(state.isCharging());
+        assertTrue(state.onTick(false, entity).action().isEmpty());
+    }
+
+    @Test
     void carriedEntityChangeCancelsAndWaitsForNextPress() {
         UseInputState state = new UseInputState();
         UUID first = UUID.randomUUID();

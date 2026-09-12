@@ -12,6 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.allay.Allay;
@@ -22,6 +24,7 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import tschipp.carryon.common.carry.CarryOnData;
 import tschipp.carryon.common.carry.CarryOnDataManager;
 
+import java.util.List;
 import java.util.UUID;
 
 @GameTestHolder("carryonkick")
@@ -142,6 +145,67 @@ public final class CarryOnKickGameTests {
             return;
         }
         restoredTallMob.discard();
+        helper.succeed();
+    }
+
+    @PrefixGameTestTemplate(false)
+    @GameTest(template = "empty3x3x3")
+    public static void releasesAdultMobAtEveryYawWithoutPlayerOverlap(GameTestHelper helper) {
+        ServerPlayer player = playerAt(helper, 0.0F);
+        List<EntityType<? extends Mob>> mobTypes = List.of(
+                EntityType.POLAR_BEAR, EntityType.SPIDER, EntityType.COW, EntityType.PIG);
+        int[] yaws = {45, 0, 15, 30, 60, 75, 90, 105, 120, 135, 150, 165,
+                180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345};
+        for (EntityType<? extends Mob> mobType : mobTypes) {
+            for (int chargeTicks : new int[]{0, 20}) {
+                for (int yaw : yaws) {
+                    player.setYRot(yaw);
+                    Mob original = mobType.create(helper.getLevel());
+                    if (original == null) {
+                        helper.fail("mob type did not create at yaw " + yaw);
+                        return;
+                    }
+                    boolean expectedAdultAge = original instanceof AgeableMob;
+                    Component name = Component.literal(mobType + " yaw " + yaw + " charge " + chargeTicks);
+                    original.setCustomName(name);
+                    original.setHealth(5.0F);
+                    if (original instanceof AgeableMob originalAgeable) {
+                        originalAgeable.setAge(0);
+                    }
+                    original.setPos(player.position());
+                    helper.getLevel().addFreshEntity(original);
+                    UUID id = storeAndRemove(player, original);
+
+                    KickLauncher.Result result = KickLauncher.launch(player, chargeTicks);
+                    if (!result.success()) {
+                        helper.fail("open-space release failed for " + mobType
+                                + " at yaw " + yaw + " with charge " + chargeTicks);
+                        return;
+                    }
+                    Entity restored = helper.getLevel().getEntity(id);
+                    if (restored == null || restored.getType() != mobType || !id.equals(restored.getUUID())) {
+                        helper.fail("release changed or lost " + mobType + " at yaw " + yaw);
+                        return;
+                    }
+                    if (!name.equals(restored.getCustomName())
+                            || !(restored instanceof Mob restoredMob)
+                            || restoredMob.getHealth() != 5.0F) {
+                        helper.fail("release did not preserve " + mobType + " NBT at yaw " + yaw);
+                        return;
+                    }
+                    if (expectedAdultAge
+                            && (!(restored instanceof AgeableMob restoredAgeable) || restoredAgeable.getAge() != 0)) {
+                        helper.fail("release did not preserve adult age for " + mobType + " at yaw " + yaw);
+                        return;
+                    }
+                    if (restored.getBoundingBox().intersects(player.getBoundingBox())) {
+                        helper.fail("released " + mobType + " intersects the player at yaw " + yaw);
+                        return;
+                    }
+                    restored.discard();
+                }
+            }
+        }
         helper.succeed();
     }
 

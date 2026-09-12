@@ -46,8 +46,11 @@ public final class KickLauncher {
         Vec3 horizontalFacing = new Vec3(
                 net.minecraft.util.Mth.sin(yawRadians), 0.0, net.minecraft.util.Mth.cos(yawRadians));
         double clearance = player.getBbWidth() * 0.5 + entity.getBbWidth() * 0.5 + 0.05;
+        // 当たり判定は軸平行なので、斜めでも少なくとも一軸を両者の半幅合計より離す。
+        double axisScale = Math.max(Math.abs(horizontalFacing.x), Math.abs(horizontalFacing.z));
+        double spawnDistance = Math.max(KickProfile.SPAWN_DISTANCE, clearance / axisScale);
         Vec3 horizontalOrigin = player.getEyePosition()
-                .add(horizontalFacing.scale(Math.max(KickProfile.SPAWN_DISTANCE, clearance)));
+                .add(horizontalFacing.scale(spawnDistance));
         double originY = Math.max(player.getY() + 0.05, player.getEyeY() - entity.getBbHeight() * 0.55);
         Vec3 origin = new Vec3(horizontalOrigin.x, originY, horizontalOrigin.z);
         entity.setPos(origin);
