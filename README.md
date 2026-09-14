@@ -37,3 +37,11 @@ For Minecraft 1.21.1, use Java 21 and run `./gradlew build`. Loader-specific JAR
 For Minecraft 1.20.1, use Java 21 and run `./gradlew build` from `mc1201/`. This build produces Java 17-compatible classes. Loader-specific JARs are written to `mc1201/forge/build/libs` and `mc1201/fabric/build/libs`. The build shares the original artwork, sounds, and translations with the 1.21.1 version.
 
 For Minecraft 1.21.11, use Java 21 and run `./gradlew build` from `fabric-1.21.11/`. For Minecraft 26.2, use Java 25 and run the same command from `fabric-26.2/`. Each build writes its JAR to `build/libs` inside that directory and shares the original artwork, sounds, and translations.
+
+## Downloads and support
+
+Downloads: [CurseForge](https://www.curseforge.com/minecraft/mc-mods/carry-on-kicking) · [GitHub Releases](https://github.com/KURONAMI333/carry-on-kicking/releases/tag/v0.1.0).
+
+For bugs and questions, comment on the [CurseForge page](https://www.curseforge.com/minecraft/mc-mods/carry-on-kicking) or DM [@kuronami333 on X](https://x.com/kuronami333).
+
+[Source](https://github.com/KURONAMI333/carry-on-kicking) · [License](LICENSE)
